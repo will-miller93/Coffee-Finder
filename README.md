@@ -16,5 +16,7 @@ Map application utilizing Google Maps API to map locations of specialty coffee s
 
 ### Packages and APIs
 * Google Maps API
+* Auth0
+
 
 
