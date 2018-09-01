@@ -1,10 +1,33 @@
-// this file will have all of the socket.io functionality to add things to the Database.
-// this will also have all of the Express Server stuff here too.
-// this will also have the MiddleWare here too. 
+///// DEPENDENCIES /////
+var express = require("express");
+var bodyParser = require("body-parser");
 
-// the backend of this app is an Express server and utilizes Socket.io
-// so that everyone using the app can see new shops that are popping up as
-// they are added.
+// Set up the Express App //
+// ====================== //
+var app = express();
+var PORT = process.env.PORT || 3306;
 
-// this means that the socket emitter will probably need to be
-// in both pages components.
+// require models for sync
+var db = require("./models");
+
+// Set up the Express app and handle the DataParsing
+// parse the application/ x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true}));
+// parse the application/json
+app.use(bodyParser.json());
+
+// static directory
+// this may be different with react.
+// app.use(express.static("public"));
+
+// Routes //
+// ====== //
+require("./routes/api-routes.js")(app);
+
+// Syncing the sequelize models and then starting the express app //
+// ============================================================== //
+db.sequelize.sync().then(function() {
+    app.listen(PORT, function() {
+        console.log("App listening on PORT " + PORT);
+    });
+});

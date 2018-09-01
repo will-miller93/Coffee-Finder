@@ -14,6 +14,7 @@ This is a web application that allows owners, managers and operators of Specialt
 
 ### Back End
 * Express
+* Sequelize
 
 ### Database
 * MySQl
@@ -21,8 +22,9 @@ This is a web application that allows owners, managers and operators of Specialt
 ### Packages and APIs
 * Google Maps API
 * Auth0
-* Socket.io
-* ifEnv
+* Body-Parser
+* mysql2
+* Sequelize
 
 
 
