@@ -22,6 +22,7 @@ This is a web application that allows owners, managers and operators of Specialt
 * Google Maps API
 * Auth0
 * Socket.io
+* ifEnv
 
 
 
