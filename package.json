@@ -1,0 +1,26 @@
+{
+  "name": "soltech-codechallenge",
+  "version": "1.0.0",
+  "description": "web application to find coffee shops",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/will-miller93/SOLTECH-CodeChallenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/will-miller93/SOLTECH-CodeChallenge/issues"
+  },
+  "homepage": "https://github.com/will-miller93/SOLTECH-CodeChallenge#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mysql2": "^1.6.1",
+    "sequelize": "^4.38.0"
+  }
+}
