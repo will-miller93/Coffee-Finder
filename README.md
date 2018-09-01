@@ -10,6 +10,7 @@ This is a web application that allows owners, managers and operators of Specialt
 * React.js
 * HTML5
 * CSS
+* BootStrap
 
 ### Back End
 * Express
@@ -20,6 +21,7 @@ This is a web application that allows owners, managers and operators of Specialt
 ### Packages and APIs
 * Google Maps API
 * Auth0
+* Socket.io
 
 
 
