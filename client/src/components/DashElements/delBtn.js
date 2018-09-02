@@ -1,8 +1,10 @@
 // import React
+import React from 'react';
 
-// another simple button from bootstrap here.
-// will be on the ShopDash page.
-// should have a warning if clicked.
-// you will need to make another modal for the warning
+const delBtn = () => (
+    <div>
+        <button type='button' className='btn btn-secondary'> Delete </button>
+    </div>
+)
 
-// dont forget to export this component
+export default delBtn;

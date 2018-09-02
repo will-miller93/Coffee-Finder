@@ -1,8 +1,10 @@
 // import react
+import React from 'react';
 
-// this is just a simple Save button to add to the 
-// this is the button that will be at the bottom of the shopDash
-// page to save everything to the database.
-// this button will be taken from Bootstrap
+const saveBtn = () => (
+    <div>
+        <button type='button' className='btn btn-secondary'> Save </button>
+    </div>
+)
 
-// dont forget to export this component
+export default saveBtn;

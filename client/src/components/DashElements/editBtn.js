@@ -1,8 +1,10 @@
 // import react
+import React from 'react';
 
-// this is another simple button from bootstrap
-// will be used in both forms to be able to edit information
-// the edit buttons will be the only buttons in each of the forms.
-// the forms will be disabled until edit is clicked.
+const editBtn = () => (
+    <div>
+        <button type='button' className='btn btn-secondary'> Edit </button>
+    </div>
+)
 
-// dont forget to export this component.
+export default editBtn;
