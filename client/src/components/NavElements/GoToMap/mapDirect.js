@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ToMap = () => {
+const ToMap = () => {
     return (
         <li className="nav-item">
             <a className="nav-link" href="!#"> Go To Map </a>
@@ -8,5 +8,6 @@ export const ToMap = () => {
     )
 };
 
+export default ToMap;
 // this element should only be on the navbar when on the
 // Dashboard page.

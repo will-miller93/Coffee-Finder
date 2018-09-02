@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Dashboard = () => {
+const Dashboard = () => {
     return (
         <li className="nav-item">
             <a className="nav-link" href="!#"> Dashboard </a>
@@ -8,5 +8,6 @@ export const Dashboard = () => {
     )
 };
 
+export default Dashboard;
 // this nav element will only be on the navbar if on the
 // MapPage
