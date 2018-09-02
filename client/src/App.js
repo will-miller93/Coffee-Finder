@@ -8,10 +8,12 @@ import ShopDash from './pages/ShopDash/shopDash';
 const App = () => {
   return(
     <Router>
-      <Switch>
-        <Route exact path='/' component={MapPage} />
-        <Route exact path='/dashboad' component={ShopDash} />
-      </Switch>
+      <div>
+        <Switch>
+          <Route exact path='/' component={MapPage} />
+          <Route exact path='/dashboard' component={ShopDash} />
+        </Switch>
+      </div>
     </Router>
   )
 }

@@ -1,10 +1,10 @@
 // import react
 import React from 'react';
 
-const saveBtn = () => (
+const SaveBtn = () => (
     <div>
         <button type='button' className='btn btn-secondary'> Save </button>
     </div>
 )
 
-export default saveBtn;
+export default SaveBtn;

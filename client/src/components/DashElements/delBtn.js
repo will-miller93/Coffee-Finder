@@ -1,10 +1,10 @@
 // import React
 import React from 'react';
 
-const delBtn = () => (
+const DelBtn = () => (
     <div>
         <button type='button' className='btn btn-secondary'> Delete </button>
     </div>
 )
 
-export default delBtn;
+export default DelBtn;
