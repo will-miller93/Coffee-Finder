@@ -5,7 +5,7 @@ import axios from 'axios';
 export default {
     // get all shops
     getShops: function() {
-        return axios.get('/api/shops');
+        return axios.get('http://localhost:3306/api/shops');
     },
     // get one shop by id
     getOneShop: function(id) {
@@ -13,7 +13,7 @@ export default {
     },
     // add new shop to database
     addShop: function(shopData) {
-        return axios.post('/api/shops', shopData);
+        return axios.post('http://localhost:3306/api/shops', shopData);
     },
     // update shop by id
     updateShop: function(id) {

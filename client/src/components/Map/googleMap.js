@@ -2,7 +2,8 @@
 import React, {Component} from 'react';
 // import google-map-react
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
-
+import Geocode from 'react-geocode';
+import API from '../../utils/API';
 
 class GoogleMapsContainer extends Component {
     
@@ -11,11 +12,10 @@ class GoogleMapsContainer extends Component {
         this.state = {
             showingInfoWindow: false,
             activeMarker: {},
-            selectedPlace: {}
+            selectedPlace: {},
+            searchData: this.props.passedSearchData,
+            shops: []
         }
-        // binding this to onClick functions
-        this.onMarkerClick = this.onMarkerClick.bind(this);
-        this.onMapClick = this.onMapClick.bind(this);
 
     }
 
@@ -23,17 +23,33 @@ class GoogleMapsContainer extends Component {
     // ========================== //
     
     componentDidMount() {
-        // getAll shops from the database
-        // then render the markers
-        // attach shop information to the InfoWindow 
+        // get all axios request
+        API.getShops({})
+        .then(res => {
+            this.setState({
+                shops: res.data
+            })
+            console.log(this.state.shops);
+        })
+        .catch(err => console.log(err));
     }
 
     // Helper Methods Needed //
     // ===================== //
 
-    renderMarkers() {
-        // will render methods based on the data recieved from Database
-    }
+    convertAddress = (data) => {
+        Geocode.setApiKey("AIzaSyA8X8orU5SFKA1G--GaEZDaIDZskhJsuds");
+        Geocode.fromAddress(data).then(
+            response => {
+                const {lat, lng} = response.results[0].geometry.location;
+                console.log(lat, lng);
+            },
+            error => {
+                console.log(error);
+                console.log('this didnt work');
+            }
+        )
+    };
     
     onMarkerClick = (props, marker, e) => {
         this.setState({
@@ -41,16 +57,16 @@ class GoogleMapsContainer extends Component {
             activeMarker: marker,
             showingInfoWindow: true
         });
-    }
+    };
 
     onMapClick = (props) => {
         if (this.state.showingInfoWindow) {
             this.setState({
                 showingInfoWindow: false,
-                activeMarker: null
+                activeMarker: {}
             });
         }
-    }
+    };
 
     // Now Render Return the Map //
     // ========================= //
@@ -69,18 +85,36 @@ class GoogleMapsContainer extends Component {
                 initialCenter={{ lat: 33.7490, lng: -84.3880 }}
                 zoom={8}
             >
-            <Marker
-                onClick={this.onMarkerClick}
-                position={{ lat: 33.7490, lng: -84.3880 }}
-            />
-            <InfoWindow
+                {this.state.shops.length ? (
+                    this.state.shops.map(shop => (
+                        <Marker
+                        key={shop.id}
+                        onClick={this.onMarkerClick}
+                        position={{lat: shop.lat, lng: shop.lng}}
+                        name={shop.name}
+                        address={shop.address}
+                        hours={shop.hours}
+                        website={shop.website}
+                        facebook={shop.facebook}
+                        instagram={shop.instagram}
+                        twitter={shop.twitter}
+                        roaster={shop.roaster}
+                        description={shop.description}
+                        />
+
+                    ))
+
+                ) : ( 
+                    console.log('there are no shops to map')
+                )}
+                <InfoWindow
                 marker={this.state.activeMarker}
-                visible={this.state.showingInfoWindow}    
-            >
+                visible={this.state.showingInfoWindow}
+                >
                 <div>
-                    <h1>info window working</h1>
+                    <h5>{this.state.activeMarker.name}</h5>
                 </div>
-            </InfoWindow>
+                </InfoWindow>
             </Map>
         )
     }
@@ -89,4 +123,3 @@ class GoogleMapsContainer extends Component {
 export default GoogleApiWrapper({
     apiKey: ("AIzaSyDvQ6gO8X6KqV_Ghn2lFXBg7MoYGdcTPWM")
 })(GoogleMapsContainer)
-

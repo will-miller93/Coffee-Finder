@@ -9,9 +9,10 @@ class MapPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // should only need shops to be an array
-            // all of the data from the data base for each shop will be coming with it
-            shops: []
+            // shops will either come in here or in googlemapswrapper
+            shops: [],
+            // state for the data recieved from mapNav (which recieved it from inputArea)
+            inputData: ''
         }
     }
 
@@ -20,23 +21,30 @@ class MapPage extends Component {
     componentDidMount() {
         // execute the getAllShops method
         // use the newly setState to render markers
-    
+
     }
 
     // Helper Methods Needed //
     // ===================== //
 
-    getAllShops() {
-        // axios to get all the shops.
-        // then setState to accept all of the shops  
-    }
+    // callback function to get the data from grand child
+    getSearchData = (searchData) => {
+        console.log(searchData);
+        this.setState({
+            inputData: searchData
+        });
+        console.log('search data should has been recieved.');
+    };
+
+    // function to pass the search data to the GoogleMapWrapper
+
 
 
     render(){
         return(
             <div>
-                <MapNavBar />
-                <GoogleMapWrapper />
+                <MapNavBar getSearchData={this.getSearchData}/>
+                <GoogleMapWrapper passedSearchData={this.state.inputData} />
             </div>
         );
     }

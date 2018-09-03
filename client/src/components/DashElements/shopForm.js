@@ -44,10 +44,6 @@ const ShopForm = () => (
                 <label htmlFor='shopDescription'>Shop Description</label>
                 <textarea className='form-control' id='shopDescription' rows='4' placeholder='What else would you like people to know about your shop?'></textarea>
             </div>
-            <div className='form-group'>
-                <label htmlFor='shopMenu'>Add your shops Menu!</label>
-                <input type='file' className='form-control-file' id='shopMenu'></input>
-            </div>
         </form>
     </div>
 );

@@ -6,7 +6,7 @@ var db = require("../models");
 module.exports = function(app) {
     // GET route for getting all of the shops
     app.get("/api/shops/", function(req, res){
-        db.Shops
+        db.shops
         .findAll({})
         .then(function(dbShops) {
             res.json(dbShops);
@@ -14,7 +14,7 @@ module.exports = function(app) {
     });
     // GET route for getting one specific shop (by id)
     app.get('api/shops/:id', function(req, res){
-        db.Shops
+        db.shops
         .findOne({
             where: {
                 id: req.params.id
@@ -27,7 +27,7 @@ module.exports = function(app) {
     // POST route for saving a new shop
     app.post("/api/shops", function(req, res){
         console.log(req.body);
-        db.Shops
+        db.shops
         .create(req.body)
         .then(function(dbShops){
             res.json(dbShops);
@@ -35,7 +35,7 @@ module.exports = function(app) {
     });
     // DELETE route for deleting a shop (will be deleting by id)
     app.delete("/api/shops/:id", function(req, res){
-        db.Shops
+        db.shops
         .destroy({
             where: {
                 id: req.params.id
@@ -47,7 +47,7 @@ module.exports = function(app) {
     });
     // PUT route for updating shops (will be updating by id)
     app.put("/api/shops", function(req, res){
-        db.Shops
+        db.shops
         .update(req.body, {
             where: {
                 id: req.params.id
@@ -58,11 +58,3 @@ module.exports = function(app) {
         });
     });
 };
-
-
-            
-            // name: req.body.name,
-            // address: req.body.address,
-            // phone: req.body.phone,
-            // hours: req.body.hours,
-            // roaster: req.body.roaster
