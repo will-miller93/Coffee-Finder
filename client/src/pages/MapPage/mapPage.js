@@ -4,26 +4,47 @@ import MapNavBar from '../../components/NavBar/mapPageNavBar';
 
 class MapPage extends Component {
 
-    // Lifecycle Methods Needed //
+    // State
+    // =====
+    constructor(props) {
+        super(props);
+        this.state = {
+            // shops will either come in here or in googlemapswrapper
+            shops: [],
+            // state for the data recieved from mapNav (which recieved it from inputArea)
+            inputData: ''
+        }
+    }
+
+    // Lifecycle Hooks Needed //
     // ======================== //
     componentDidMount() {
-        // this will get all shops from database
+        // execute the getAllShops method
+        // use the newly setState to render markers
 
     }
 
     // Helper Methods Needed //
     // ===================== //
 
-    renderMarkers() {
+    // callback function to get the data from grand child
+    getSearchData = (searchData) => {
+        console.log(searchData);
+        this.setState({
+            inputData: searchData
+        });
+        console.log('search data should has been recieved.');
+    };
 
-    }
+    // function to pass the search data to the GoogleMapWrapper
+
 
 
     render(){
         return(
             <div>
-                <MapNavBar />
-                <GoogleMapWrapper />
+                <MapNavBar getSearchData={this.getSearchData}/>
+                <GoogleMapWrapper passedSearchData={this.state.inputData} />
             </div>
         );
     }
@@ -31,8 +52,5 @@ class MapPage extends Component {
 
 export default MapPage;
 
-// Default placement for the google maps.
-// in render/ return
-    // right here the only thing that you will need to
-    // render/return is the google map and all of the map markers
+// this page takes the getAll from axios
 

@@ -17,22 +17,15 @@ module.exports = function(sequelize, DataTypes) {
         phone: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [1]
-            }
         },
         hours: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [1]
-            }
         },
         website: {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
-                len: [1],
                 isUrl: true
             }
         },
@@ -40,7 +33,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
-                len: [1],
                 isUrl: true
             }
         },
@@ -48,7 +40,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
-                len: [1],
                 isUrl: true
             }
         },
@@ -56,7 +47,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
-                len: [1],
                 isUrl: true
             }
         },
@@ -70,14 +60,20 @@ module.exports = function(sequelize, DataTypes) {
         description: {
             type: DataTypes.STRING(300),
             allowNull: true,
+        },
+        lat: {
+            type: DataTypes.STRING,
+            allowNull: false,
             validate: {
                 len: [1]
             }
         },
-        menu: {
-            type: DataTypes.BLOB('long'),
-            allowNull: true,
-        
+        lng: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
         }
 
     });

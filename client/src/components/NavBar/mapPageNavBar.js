@@ -10,6 +10,10 @@ import AreaSearch from '../NavElements/AreaSearch/inputArea';
 // this is very simple. Just the parent <nav> element for the navelements
 // components to sit it
 class MapNavBar extends Component {
+
+    // continue to pass the callback function from the parent down to the
+    // grandchild component (AreaSearch) through props
+
     render(){
         return(
             <nav className='navbar navbar-expand-lg navbar-light bg-light'>
@@ -18,7 +22,7 @@ class MapNavBar extends Component {
                     <LogIn />
                     <LogOut />
                     <DashBoard />
-                    <AreaSearch />
+                    <AreaSearch getSearchData={this.props.getSearchData}/>
                 </ul>
             </nav>
         )
