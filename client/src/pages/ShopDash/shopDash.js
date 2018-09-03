@@ -10,7 +10,29 @@ import ShopForm from '../../components/DashElements/shopForm';
 
 class ShopDash extends Component {
 
-    // Lifecycle Method //
+    // state //
+    // ===== //
+    constructor(props) {
+        super(props);
+        this.state = {
+            // the state will be all fields that
+            // a shop can have. 
+            // getShop axios request will set the state
+            name: '',
+            address: '',
+            phone: '',
+            hours: '',
+            website: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            roaster: '',
+            description: '',
+            
+        }
+    }
+
+    // Lifecycle Hook //
     // ================ //
     componentDidMount() {
         // gets all of the data from the database for this user
@@ -21,7 +43,10 @@ class ShopDash extends Component {
     // ============== //
 
     fillInputFields() {
-        // this function will take the data from the database and fill the inputs
+        // this will getShop axios request
+        // this wil get the shop by id from the database
+        // and will also fill the input fields.
+        // this wil be executed in the componentDidMount hook
     }
 
     handleInputChange() {
@@ -29,8 +54,8 @@ class ShopDash extends Component {
     }
 
     delBtnOnClick(){
-        // this will find the shop in the database and delete it
-        // it will be found by id
+        // this will use the deleteShop axios request
+        // need to send the Id with the request
     }
 
     editBtnOnClick(){
@@ -39,9 +64,17 @@ class ShopDash extends Component {
     }
 
     saveBtnOnClick(){
-        // this will save and update the row in the database
-        // will be found by id
+        // this will add and update depending on conditions met
         // disables the form inputs
+    }
+
+    addShop() {
+        // the add shop axios request
+    }
+
+    updateShop() {
+        // the updateShop axios request
+        // need to send the id with it.
     }
 
     render() {

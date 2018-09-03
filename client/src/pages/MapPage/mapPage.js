@@ -4,18 +4,31 @@ import MapNavBar from '../../components/NavBar/mapPageNavBar';
 
 class MapPage extends Component {
 
-    // Lifecycle Methods Needed //
+    // State
+    // =====
+    constructor(props) {
+        super(props);
+        this.state = {
+            // should only need shops to be an array
+            // all of the data from the data base for each shop will be coming with it
+            shops: []
+        }
+    }
+
+    // Lifecycle Hooks Needed //
     // ======================== //
     componentDidMount() {
-        // this will get all shops from database
-
+        // execute the getAllShops method
+        // use the newly setState to render markers
+    
     }
 
     // Helper Methods Needed //
     // ===================== //
 
-    renderMarkers() {
-
+    getAllShops() {
+        // axios to get all the shops.
+        // then setState to accept all of the shops  
     }
 
 
@@ -31,8 +44,5 @@ class MapPage extends Component {
 
 export default MapPage;
 
-// Default placement for the google maps.
-// in render/ return
-    // right here the only thing that you will need to
-    // render/return is the google map and all of the map markers
+// this page takes the getAll from axios
 

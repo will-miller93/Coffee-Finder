@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 // static directory
 // this may be different with react.
-// app.use(express.static("public"));
+app.use(express.static("public"));
 
 // Routes //
 // ====== //
