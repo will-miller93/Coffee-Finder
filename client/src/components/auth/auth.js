@@ -44,7 +44,7 @@ export function requireAuth(nextState, replace) {
 // get id_token from local storage
 export function getIdToken() {
     return localStorage.getItem(ID_TOKEN_KEY);
-};
+}
 
 // get access_token from local storage
 // export function getAccessToken() {
@@ -54,12 +54,12 @@ export function getIdToken() {
 // clear id_token from local storage
 function clearIdToken() {
     localStorage.removeItem(ID_TOKEN_KEY);
-};
+}
 
 // clear access_token from local storage
 function clearAccessToken() {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-};
+}
 
 // helper function to extract the tokens.
 // two regex expressions. the first is finding the hashed path location and the second is replacing '+' with whitespace
@@ -67,25 +67,25 @@ function getParameterByName(name) {
     let match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash);
     console.log(match);
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-};
+}
 
 // Store access_token in local storage
 export function setAccessToken() {
     let accessToken = getParameterByName('access_token');
     localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-};
+}
 
 // Store id_token in local storage
 export function setIdToken() {
     let idToken = getParameterByName('id_token');
     localStorage.setItem(ID_TOKEN_KEY, idToken);
-};
+}
 
 // function to check if user is logged in
 export function isLoggedIn() {
     const idToken = getIdToken();
     return !!idToken && !isTokenExpired(idToken);
-};
+}
 
 // function to get a new expiration date for the users tokens
 function getTokenExpirationDate(encodedToken) {
@@ -101,10 +101,10 @@ function getTokenExpirationDate(encodedToken) {
     date.setUTCSeconds(token.exp);
     // return date after after the new date is set.
     return date;
-};
+}
 
 // function to check if token is expired
 function isTokenExpired(token) {
     const expirationDate = getTokenExpirationDate(token);
     return expirationDate < new Date();
-};
+}
