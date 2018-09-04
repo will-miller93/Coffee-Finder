@@ -9,6 +9,9 @@ import TextArea from '../../components/Form/textArea';
 import Input from '../../components/Form/input';
 import API from '../../utils/API';
 import Geocode from 'react-geocode';
+// import '../../components/auth/auth';
+// import {setIdToken, setAccessToken} from '../../components/auth/auth';
+// import jwt_decode from 'jwt-decode';
 
 class ShopDash extends Component {
 
@@ -37,9 +40,9 @@ class ShopDash extends Component {
     // Lifecycle Hook //
     // ================ //
     componentDidMount() {
-        // gets all of the data from the database for this user
-        // the information from the database will be inserted into input fields
-
+        // let userId = '';
+        // you need to get a specific user here (to fill the inputs)
+        // this is the page that loads when you
     }
 
     // Helper Methods Needed //
@@ -230,3 +233,15 @@ class ShopDash extends Component {
 // export this component.
 export default ShopDash;
 
+// if (localStorage.getItem('id_token')) {
+//     let uid = localStorage.getItem('id_token');
+//     let userInfo = jwt_decode(uid);
+//     userId = userInfo.sub;
+//     console.log(userId);
+// } else {
+//     setIdToken();
+//     setAccessToken();
+//     let token = localStorage.getItem('id_token');
+//     let userInfo = jwt_decode(token);
+//     userId = userInfo.sub
+// }

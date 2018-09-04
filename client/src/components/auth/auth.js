@@ -7,8 +7,8 @@ const ACCESS_TOKEN_KEY = 'access_token';
 
 const CLIENT_ID = 'eMpLssdovFz0Q0JgYvHSfUka7m7eq390';
 const CLIENT_DOMAIN = 'coffeefinder.auth0.com';
-
-const REDIRECT = 'http://localhost:3000/';
+const AUDIENCE = 'https://coffeefinder.auth0.com/userinfo'
+const REDIRECT = 'http://localhost:3000/dashboard';
 // const SCOPE = 'openid';
 
 var auth = new auth0.WebAuth({
@@ -20,6 +20,7 @@ export function login() {
     auth.authorize({
         responseType: 'token id_token',
         redirectUri: REDIRECT,
+        audience: AUDIENCE,
         scope: 'openid profile'
     });
 }
@@ -46,9 +47,9 @@ export function getIdToken() {
 };
 
 // get access_token from local storage
-export function getAccessToken() {
-    return localStorage.getItem(ACCESS_TOKEN_KEY);
-};
+// export function getAccessToken() {
+//     return localStorage.getItem(ACCESS_TOKEN_KEY);
+// };
 
 // clear id_token from local storage
 function clearIdToken() {

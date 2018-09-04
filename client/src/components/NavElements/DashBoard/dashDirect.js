@@ -3,7 +3,7 @@ import React from 'react';
 const Dashboard = () => (
 
         <li className="nav-item">
-            <a className="nav-link" href="!#"> Dashboard </a>
+            <a className="nav-link" href="/dashboard"> Dashboard </a>
         </li>
 
 );
