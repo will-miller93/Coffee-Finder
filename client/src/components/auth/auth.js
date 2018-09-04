@@ -1,5 +1,6 @@
 import decode from 'jwt-decode';
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
+// import history from '../../history';
 import auth0 from 'auth0-js';
 
 const ID_TOKEN_KEY = 'id_token';
@@ -21,7 +22,7 @@ export function login() {
         responseType: 'token id_token',
         redirectUri: REDIRECT,
         audience: AUDIENCE,
-        scope: 'openid profile'
+        scope: 'openid'
     });
 }
 
@@ -30,7 +31,10 @@ export function login() {
 export function logout() {
     clearIdToken();
     clearAccessToken();
-    BrowserRouter.push('/');
+    auth.logout({
+        returnTo: 'http://localhost:3000/',
+        clientID: CLIENT_ID
+    });
 }
 
 // function that will run each time a path is attempted to be accesses that requires authentication
@@ -47,9 +51,9 @@ export function getIdToken() {
 }
 
 // get access_token from local storage
-// export function getAccessToken() {
-//     return localStorage.getItem(ACCESS_TOKEN_KEY);
-// };
+export function getAccessToken() {
+    return localStorage.getItem(ACCESS_TOKEN_KEY);
+};
 
 // clear id_token from local storage
 function clearIdToken() {
@@ -73,13 +77,13 @@ function getParameterByName(name) {
 export function setAccessToken() {
     let accessToken = getParameterByName('access_token');
     localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-}
+};
 
 // Store id_token in local storage
 export function setIdToken() {
     let idToken = getParameterByName('id_token');
     localStorage.setItem(ID_TOKEN_KEY, idToken);
-}
+};
 
 // function to check if user is logged in
 export function isLoggedIn() {

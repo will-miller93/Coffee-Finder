@@ -64,16 +64,10 @@ module.exports = function(sequelize, DataTypes) {
         lat: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [1]
-            }
         },
         lng: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [1]
-            }
         }
 
     });
