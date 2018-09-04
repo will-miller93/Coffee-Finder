@@ -9,8 +9,6 @@ class MapPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // shops will either come in here or in googlemapswrapper
-            shops: [],
             // state for the data recieved from mapNav (which recieved it from inputArea)
             inputData: ''
         }

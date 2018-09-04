@@ -5,7 +5,8 @@ import LogIn from '../NavElements/LogIn/logInDirect';
 import LogOut from '../NavElements/LogOut/logOutDirect';
 import DashBoard from '../NavElements/DashBoard/dashDirect';
 import AreaSearch from '../NavElements/AreaSearch/inputArea';
-
+import '../auth/auth';
+import {requireAuth} from '../auth/auth';
 
 // this is very simple. Just the parent <nav> element for the navelements
 // components to sit it
@@ -21,7 +22,7 @@ class MapNavBar extends Component {
                     <Title />
                     <LogIn />
                     <LogOut />
-                    <DashBoard />
+                    <DashBoard onClick={requireAuth}/>
                     <AreaSearch getSearchData={this.props.getSearchData}/>
                 </ul>
             </nav>

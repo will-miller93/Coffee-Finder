@@ -1,9 +1,11 @@
 import React from 'react';
+import {logout} from '../../auth/auth';
 
 const Logout = () => (
 
         <li className="nav-item">
-            <a className="nav-link" href="!#"> Logout </a>
+            {/* <a className="nav-link" href="/" onClick={logout}> Logout </a> */}
+            <button type="button" className="btn btn-md" onClick={logout}>Logout</button>
         </li>
 
 );

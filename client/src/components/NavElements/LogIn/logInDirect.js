@@ -1,8 +1,10 @@
 import React from 'react';
-
+import {login} from '../../auth/auth';
+// this needs to redirect to the auth0 login page
 const Login = () => (
         <li className="nav-item">
-            <a className="nav-link" href="!#"> Login </a>
+            {/* <a className="nav-link" href="#"> Login </a> */}
+            <button type="button" className="btn btn-md" onClick={login}>Login</button>
         </li>
 );
 

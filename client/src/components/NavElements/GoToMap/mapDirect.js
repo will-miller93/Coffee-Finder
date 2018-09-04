@@ -3,7 +3,7 @@ import React from 'react';
 const ToMap = () => (
 
         <li className="nav-item">
-            <a className="nav-link" href="!#"> Go To Map </a>
+            <a className="nav-link" href="/"> Go To Map </a>
         </li>
 
 );

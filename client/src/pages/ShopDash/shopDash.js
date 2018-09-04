@@ -9,6 +9,9 @@ import TextArea from '../../components/Form/textArea';
 import Input from '../../components/Form/input';
 import API from '../../utils/API';
 import Geocode from 'react-geocode';
+import '../../components/auth/auth';
+import {setIdToken, setAccessToken} from '../../components/auth/auth';
+import jwt_decode from 'jwt-decode';
 
 class ShopDash extends Component {
 
@@ -37,9 +40,21 @@ class ShopDash extends Component {
     // Lifecycle Hook //
     // ================ //
     componentDidMount() {
-        // gets all of the data from the database for this user
-        // the information from the database will be inserted into input fields
-
+        let userId = '';
+        if (localStorage.getItem('id_token')) {
+            let uid = localStorage.getItem('id_token');
+            let userInfo = jwt_decode(uid);
+            userId = userInfo.sub;
+            console.log(userId);
+        } else {
+            console.log('creating tokens');
+            setIdToken();
+            setAccessToken();
+            let token = localStorage.getItem('id_token');
+            let userInfo = jwt_decode(token);
+            userId = userInfo.sub
+            console.log(userId);
+        }
     }
 
     // Helper Methods Needed //
@@ -81,7 +96,7 @@ class ShopDash extends Component {
             this.setState({
                 saveButtonDisabled: false
             });
-            Geocode.setApiKey('AIzaSyAgIicQ27-XdJ7uIxp4ptmy47mqUmMvtkQ');
+            Geocode.setApiKey('AIzaSyAVdqW7SGXiqQSJtkdrriwAbMwkM79Gagw');
             Geocode.fromAddress(this.state.address).then(response => {
                 const {lat, lng} = response.results[0].geometry.location;
                 this.setState({
@@ -90,33 +105,34 @@ class ShopDash extends Component {
                 });
                 console.log(lat, lng);
                 console.log(this.state.shoplat, this.state.shoplng);
+                API.addShop({
+                    name: this.state.name,
+                    address: this.state.address,
+                    phone: this.state.phone,
+                    hours: this.state.hours,
+                    website: this.state.website,
+                    facebook: this.state.facebook,
+                    instagram: this.state.instagram,
+                    twitter: this.state.twitter,
+                    roaster: this.state.roaster,
+                    description: this.state.description,
+                    lat: this.state.shoplat,
+                    lng: this.state.shoplng
+                })
+                .then(res => {
+                    this.setState({
+                        disabled: true
+                    })
+                })
+                // then redirect to '/'
+                .catch(err => console.log(err));
             },
             error => {
                 console.log(error);
                 console.log('conversion failed');
-            })
-            console.log('save button should be enabled');
-            API.addShop({
-                name: this.state.name,
-                address: this.state.address,
-                phone: this.state.phone,
-                hours: this.state.hours,
-                website: this.state.website,
-                facebook: this.state.facebook,
-                instagram: this.state.instagram,
-                twitter: this.state.twitter,
-                roaster: this.state.roaster,
-                description: this.state.description,
-                lat: this.state.shoplat,
-                lng: this.state.shoplng
-            })
-            .then(res => {
-                this.setState({
-                    disabled: true
-                })
-            })
-            // then redirect to '/'
-            .catch(err => console.log(err));
+            });
+            // console.log('save button should be enabled');
+
         } else if (!this.state.name || !this.state.address || !this.state.roaster) {
             this.setState({
                 saveButtonDisabled: true
