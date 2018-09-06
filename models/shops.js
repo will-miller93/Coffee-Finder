@@ -68,6 +68,10 @@ module.exports = function(sequelize, DataTypes) {
         lng: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        shopId: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
 
     });

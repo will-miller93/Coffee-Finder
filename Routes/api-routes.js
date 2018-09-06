@@ -14,6 +14,7 @@ module.exports = function(app) {
     });
     // GET route for getting one specific shop (by id)
     app.get('api/shops/:id', function(req, res){
+        console.log(req.params.id);
         db.shops
         .findOne({
             where: {
@@ -46,15 +47,31 @@ module.exports = function(app) {
         });
     });
     // PUT route for updating shops (will be updating by id)
-    app.put("/api/shops", function(req, res){
+    // app.put("/api/shops", function(req, res){
+    //     db.shops
+    //     .update(req.body, {
+    //         where: {
+    //             id: req.params.id
+    //         }
+    //     })
+    //     .then(function(dbShops){
+    //         res.json(dbShops);
+    //     });
+    // });
+    // ALT Put Request
+    app.put('/api/shops/:id', function(req, res){
         db.shops
-        .update(req.body, {
+        .findOne({
             where: {
                 id: req.params.id
             }
-        })
-        .then(function(dbShops){
+        }).then(foundShop => {
+            foundShop.update(req.body);
+        }).then(dbShops => {
             res.json(dbShops);
-        });
-    });
+        }).catch(err => {
+            console.log('there was an error finding and updating');
+            console.log(err);
+        })
+    })
 };

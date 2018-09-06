@@ -86,12 +86,14 @@ export function setIdToken() {
 };
 
 // function to check if user is logged in
+// I DONT THINK THIS IS NECESSARY
 export function isLoggedIn() {
     const idToken = getIdToken();
     return !!idToken && !isTokenExpired(idToken);
 }
 
 // function to get a new expiration date for the users tokens
+// DO I NEED THE TOKEN EXIPIRATION DATA FUNCTION?
 function getTokenExpirationDate(encodedToken) {
     // first decode the token
     const token = decode(encodedToken);

@@ -9,7 +9,7 @@ export default {
     },
     // get one shop by id
     getOneShop: function(id) {
-        return axios.get('/api/shops/' + id);
+        return axios.get('http://localhost:3306/api/shops/' + id);
     },
     // add new shop to database
     addShop: function(shopData) {
@@ -17,10 +17,10 @@ export default {
     },
     // update shop by id
     updateShop: function(id) {
-        return axios.put('/api/shops/' + id);
+        return axios.put('http://localhost:3306/api/shops/' + id);
     },
     // delete shop by id
-    deleteShop: function(id) {
-        return axios.delete('/api/shops/' + id);
-    }
+    // deleteShop: function(id) {
+    //     return axios.delete('/api/shops/' + id);
+    // }
 };

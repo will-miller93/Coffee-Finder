@@ -32,8 +32,10 @@ class ShopDash extends Component {
             description: '',
             shoplat: '',
             shoplng: '',
+            shopId: '',
             disabled: true,
-            saveButtonDisabled: false
+            saveButtonDisabled: false,
+            receivedShop: false
         }
     }
 
@@ -46,6 +48,9 @@ class ShopDash extends Component {
             let userInfo = jwt_decode(uid);
             userId = userInfo.sub;
             console.log(userId);
+            this.setState({
+                shopId: userId
+            });
         } else {
             console.log('creating tokens');
             setIdToken();
@@ -54,6 +59,9 @@ class ShopDash extends Component {
             let userInfo = jwt_decode(token);
             userId = userInfo.sub
             console.log(userId);
+            this.setState({
+                shopId: userId
+            });
         }
     }
 
@@ -64,6 +72,37 @@ class ShopDash extends Component {
         // and will also fill the input fields.
         // this wil be executed in the componentDidMount hook
         // set values = state
+        API.getOneShop(this.state.uSub)
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    name: res.data.name,
+                    address: res.data.address,
+                    phone: res.data.phone,
+                    hours: res.data.hours,
+                    website: res.data.website,
+                    facebook: res.data.facebook,
+                    instagram: res.data.instagram,
+                    twitter: res.data.twitter,
+                    roaster: res.data.roaster,
+                    description: res.data.description,
+                    lat: res.data.shoplat,
+                    lng: res.data.shoplng
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                console.log('there was an error in getting one shop from the database.');
+            })
+    }
+
+    handleSaveButtonClick() {
+        const condition = this.state.receivedShop;
+        if (condition === false) {
+            this.addShop();
+        } else {
+            this.updateShop();
+        }
     }
 
     handleInputChange = (event) => {
@@ -117,7 +156,8 @@ class ShopDash extends Component {
                     roaster: this.state.roaster,
                     description: this.state.description,
                     lat: this.state.shoplat,
-                    lng: this.state.shoplng
+                    lng: this.state.shoplng,
+                    userId: this.state.userId
                 })
                 .then(res => {
                     this.setState({
@@ -144,6 +184,30 @@ class ShopDash extends Component {
     updateShop() {
         // the updateShop axios request
         // will be using the UID from authentication to update.
+        API.updateShop(this.state.userId, {
+            name: this.state.name,
+            address: this.state.address,
+            phone: this.state.phone,
+            hours: this.state.hours,
+            website: this.state.website,
+            facebook: this.state.facebook,
+            instagram: this.state.instagram,
+            twitter: this.state.twitter,
+            roaster: this.state.roaster,
+            description: this.state.description,
+            lat: this.state.shoplat,
+            lng: this.state.shoplng,
+            userId: this.state.userId
+        })
+        .then(res => {
+            this.setState({
+                disabled: true,
+                receivedShop: true
+            });
+        }).catch(err => {
+            console.log(err);
+            console.log('error on shopDash page in update shop function.');
+        });
     }
 
     render() {
