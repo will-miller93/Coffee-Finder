@@ -51,6 +51,7 @@ class ShopDash extends Component {
             this.setState({
                 shopId: userId // set the state of userId to the decoded id_token
             });
+            this.fillInputFields();
         } else {
             console.log('creating tokens');
             setIdToken();
@@ -62,6 +63,7 @@ class ShopDash extends Component {
             this.setState({
                 shopId: userId // set the state of userId to the decoded id_token
             });
+            this.fillInputFields();
         }
     }
 
@@ -69,25 +71,23 @@ class ShopDash extends Component {
     // ============== //
 
     fillInputFields() {
-        // and will also fill the input fields.
-        // this wil be executed in the componentDidMount hook
-        // set values = state
+        console.log('fill input fields has been called');
         API.getOneShop(this.state.shopId)
             .then(res => {
-                console.log(res);
+                console.log(res.data);
                 this.setState({
-                    name: res.data.name,
-                    address: res.data.address,
-                    phone: res.data.phone,
-                    hours: res.data.hours,
-                    website: res.data.website,
-                    facebook: res.data.facebook,
-                    instagram: res.data.instagram,
-                    twitter: res.data.twitter,
-                    roaster: res.data.roaster,
-                    description: res.data.description,
-                    lat: res.data.shoplat,
-                    lng: res.data.shoplng
+                    name: res.data[0].name,
+                    address: res.data[0].address,
+                    phone: res.data[0].phone,
+                    hours: res.data[0].hours,
+                    website: res.data[0].website,
+                    facebook: res.data[0].facebook,
+                    instagram: res.data[0].instagram,
+                    twitter: res.data[0].twitter,
+                    roaster: res.data[0].roaster,
+                    description: res.data[0].description,
+                    // lat: res.data.shoplat,
+                    // lng: res.data.shoplng
                 });
             })
             .catch(err => {
@@ -97,6 +97,7 @@ class ShopDash extends Component {
     }
 
     handleSaveButtonClick = () => {
+        console.log(this.state.receivedShop);
         if (this.state.receivedShop === false) {
             this.addShop();
         } else {
@@ -133,7 +134,7 @@ class ShopDash extends Component {
             this.setState({
                 saveButtonDisabled: false
             });
-            Geocode.setApiKey('AIzaSyABp83_xdnnMkBClIU2Su-pTEiGRmi6YKw');
+            Geocode.setApiKey('AIzaSyBmvaBJPmb5C3HIgqz5hEeYFe3y7EO2iRw');
             Geocode.fromAddress(this.state.address).then(response => {
                 const {lat, lng} = response.results[0].geometry.location;
                 this.setState({
@@ -219,70 +220,70 @@ class ShopDash extends Component {
                             {/* <ShopForm /> */}
                             <form>
                                 <Input
-                                value={this.state.name}
+                                value={this.state.name || ''}
                                 onChange={this.handleInputChange}
                                 name='name'
                                 placeholder='Shop Name (Required)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.address}
+                                value={this.state.address || ''}
                                 onChange={this.handleInputChange}
                                 name='address'
                                 placeholder='Address (Required)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.phone}
+                                value={this.state.phone || ''}
                                 onChange={this.handleInputChange}
                                 name='phone'
                                 placeholder='Phone Number (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.hours}
+                                value={this.state.hours || ''}
                                 onChange={this.handleInputChange}
                                 name='hours'
                                 placeholder='Shop Hours (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.website}
+                                value={this.state.website || ''}
                                 onChange={this.handleInputChange}
                                 name='website'
                                 placeholder='Website URL (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.facebook}
+                                value={this.state.facebook || ''}
                                 onChange={this.handleInputChange}
                                 name='facebook'
                                 placeholder='Facebook Link (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.instagram}
+                                value={this.state.instagram || ''}
                                 onChange={this.handleInputChange}
                                 name='instagram'
                                 placeholder='Instagram Link (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.twitter}
+                                value={this.state.twitter || ''}
                                 onChange={this.handleInputChange}
                                 name='twitter'
                                 placeholder='Twitter Link (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.roaster}
+                                value={this.state.roaster || ''}
                                 onChange={this.handleInputChange}
                                 name='roaster'
                                 placeholder='Roaster Used (Required)'
                                 disabled={this.state.disabled}
                                 />
                                 <TextArea
-                                value={this.state.description}
+                                value={this.state.description || ''}
                                 onChange={this.handleInputChange}
                                 name='description'
                                 placeholder='Description (Optional)'
