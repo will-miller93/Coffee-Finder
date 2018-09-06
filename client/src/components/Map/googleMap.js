@@ -13,8 +13,10 @@ class GoogleMapsContainer extends Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            searchData: this.props.passedSearchData,
-            shops: []
+            searchData: '',
+            shops: [],
+            mapLat: '33.7490',
+            mapLng: '-84.3880',
         }
 
     }
@@ -22,6 +24,29 @@ class GoogleMapsContainer extends Component {
     // LifeCycle Functions Needed //
     // ========================== //
     
+    // componentWillReceiveProps(nextProps) {
+    //     console.log(nextProps);
+    //     // console.log(nextProps.passedSearchData);
+    //     // console.log(this.props.passedSearchData);
+    //     // console.log(this.state.searchData);
+    //     if (nextProps.passedSearchData !== this.props.passedSearchData) {
+    //         this.setState({
+    //             searchData: nextProps.passedSearchData
+    //         });
+    //         this.handleRecieveSearchData();
+    //         // console.log(this.state.searchData);
+    //     }
+    // }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.passedSearchData !== prevProps.passedSearchData) {
+            this.setState({
+                searchData: this.props.searchData
+            });
+            this.handleRecieveSearchData();
+        }
+    }
+
     componentDidMount() {
         // get all axios request
         API.getShops({})
@@ -32,17 +57,23 @@ class GoogleMapsContainer extends Component {
             console.log(this.state.shops);
         })
         .catch(err => console.log(err));
+
     }
 
     // Helper Methods Needed //
     // ===================== //
 
-    convertAddress = (data) => {
-        Geocode.setApiKey("AIzaSyA8X8orU5SFKA1G--GaEZDaIDZskhJsuds");
-        Geocode.fromAddress(data).then(
+    convertAddress = (props) => {
+        console.log(this.props.passedSearchData)
+        Geocode.setApiKey("AIzaSyABp83_xdnnMkBClIU2Su-pTEiGRmi6YKw");
+        Geocode.fromAddress(this.props.passedSearchData).then(
             response => {
                 const {lat, lng} = response.results[0].geometry.location;
                 console.log(lat, lng);
+                this.setState({
+                    mapLat: lat,
+                    mapLng: lng
+                });
             },
             error => {
                 console.log(error);
@@ -68,6 +99,11 @@ class GoogleMapsContainer extends Component {
         }
     };
 
+    handleRecieveSearchData = (props) => {
+        console.log('handleRecieveSearchData called');
+        this.convertAddress();
+    };
+
     // Now Render Return the Map //
     // ========================= //
     render(){
@@ -83,6 +119,7 @@ class GoogleMapsContainer extends Component {
                 style={mapStyle}
                 onClick={this.onMapClick}
                 initialCenter={{ lat: 33.7490, lng: -84.3880 }}
+                center={{lat: this.state.mapLat, lng: this.state.mapLng}}
                 zoom={8}
             >
                 {this.state.shops.length ? (

@@ -96,9 +96,8 @@ class ShopDash extends Component {
             })
     }
 
-    handleSaveButtonClick() {
-        const condition = this.state.receivedShop;
-        if (condition === false) {
+    handleSaveButtonClick = () => {
+        if (this.state.receivedShop === false) {
             this.addShop();
         } else {
             this.updateShop();
@@ -129,13 +128,12 @@ class ShopDash extends Component {
         };
     };
 
-    addShop = event => {
-        event.preventDefault();
+    addShop = () => {
         if (this.state.name && this.state.address && this.state.roaster) {
             this.setState({
                 saveButtonDisabled: false
             });
-            Geocode.setApiKey('AIzaSyAVdqW7SGXiqQSJtkdrriwAbMwkM79Gagw');
+            Geocode.setApiKey('AIzaSyABp83_xdnnMkBClIU2Su-pTEiGRmi6YKw');
             Geocode.fromAddress(this.state.address).then(response => {
                 const {lat, lng} = response.results[0].geometry.location;
                 this.setState({
@@ -157,7 +155,7 @@ class ShopDash extends Component {
                     description: this.state.description,
                     lat: this.state.shoplat,
                     lng: this.state.shoplng,
-                    userId: this.state.userId
+                    shopId: this.state.shopId
                 })
                 .then(res => {
                     this.setState({
