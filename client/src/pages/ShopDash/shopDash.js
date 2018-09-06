@@ -32,10 +32,10 @@ class ShopDash extends Component {
             description: '',
             shoplat: '',
             shoplng: '',
-            shopId: '',
+            shopId: '', // this will be the decoded id_token set by auth0. used to get one from the database.
             disabled: true,
             saveButtonDisabled: false,
-            receivedShop: false
+            receivedShop: false // state to decide if a shop was recieved from the getOne request. used to decide if to add or update
         }
     }
 
@@ -49,7 +49,7 @@ class ShopDash extends Component {
             userId = userInfo.sub;
             console.log(userId);
             this.setState({
-                shopId: userId
+                shopId: userId // set the state of userId to the decoded id_token
             });
         } else {
             console.log('creating tokens');
@@ -60,7 +60,7 @@ class ShopDash extends Component {
             userId = userInfo.sub
             console.log(userId);
             this.setState({
-                shopId: userId
+                shopId: userId // set the state of userId to the decoded id_token
             });
         }
     }
@@ -72,7 +72,7 @@ class ShopDash extends Component {
         // and will also fill the input fields.
         // this wil be executed in the componentDidMount hook
         // set values = state
-        API.getOneShop(this.state.uSub)
+        API.getOneShop(this.state.shopId)
             .then(res => {
                 console.log(res);
                 this.setState({
@@ -103,7 +103,7 @@ class ShopDash extends Component {
         } else {
             this.updateShop();
         }
-    }
+    };
 
     handleInputChange = (event) => {
         // this will handle changes for all form inputs
@@ -208,7 +208,7 @@ class ShopDash extends Component {
             console.log(err);
             console.log('error on shopDash page in update shop function.');
         });
-    }
+    };
 
     render() {
         return(
@@ -298,7 +298,7 @@ class ShopDash extends Component {
                             <EditBtn toggleInputs={this.toggleFormInputs}/>
                         </Column>
                         <Column size="md-1">
-                            <SaveBtn addShop={this.addShop}/>
+                            <SaveBtn handleSaveClick={this.handleSaveButtonClick}/>
                         </Column>
                     </Row>
                 </Container>
