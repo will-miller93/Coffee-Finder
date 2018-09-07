@@ -16,7 +16,7 @@ export default {
         return axios.post('http://localhost:3306/api/shops', shopData);
     },
     // update shop by id
-    updateShop: function(shopId, body) {
+    updateShop: function(body) {
         return axios.put('http://localhost:3306/api/shops/', body);
     },
     // delete shop by id
