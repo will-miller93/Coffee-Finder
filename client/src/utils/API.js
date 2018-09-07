@@ -8,16 +8,16 @@ export default {
         return axios.get('http://localhost:3306/api/shops');
     },
     // get one shop by id
-    getOneShop: function(id) {
-        return axios.get('http://localhost:3306/api/shops/' + id);
+    getOneShop: function(shopId) {
+        return axios.get('http://localhost:3306/api/shops/?shopId=' + shopId);
     },
     // add new shop to database
     addShop: function(shopData) {
         return axios.post('http://localhost:3306/api/shops', shopData);
     },
     // update shop by id
-    updateShop: function(id) {
-        return axios.put('http://localhost:3306/api/shops/' + id);
+    updateShop: function(shopId, body) {
+        return axios.put('http://localhost:3306/api/shops/', body);
     },
     // delete shop by id
     // deleteShop: function(id) {

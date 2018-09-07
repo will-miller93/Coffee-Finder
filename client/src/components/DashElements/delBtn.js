@@ -1,9 +1,9 @@
 // import React
 import React from 'react';
 
-const DelBtn = () => (
+const DelBtn = (props) => (
     <div>
-        <button type='button' className='btn btn-secondary'> Delete </button>
+        <button type='button' className='btn btn-secondary' onClick={props.handleUpdateClick}> Update </button>
     </div>
 )
 

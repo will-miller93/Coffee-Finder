@@ -65,7 +65,7 @@ class GoogleMapsContainer extends Component {
 
     convertAddress = (props) => {
         console.log(this.props.passedSearchData)
-        Geocode.setApiKey("AIzaSyABp83_xdnnMkBClIU2Su-pTEiGRmi6YKw");
+        Geocode.setApiKey("AIzaSyBmvaBJPmb5C3HIgqz5hEeYFe3y7EO2iRw");
         Geocode.fromAddress(this.props.passedSearchData).then(
             response => {
                 const {lat, lng} = response.results[0].geometry.location;
@@ -81,6 +81,20 @@ class GoogleMapsContainer extends Component {
             }
         )
     };
+
+    convertMarkerAddress = (data) => {
+        Geocode.setApiKey('AIzaSyCpjcewBZ-XhLjZayxSQKUeXXzSU31Mzbk');
+        Geocode.fromAddress(data).then(
+            response => {
+                const {lat, lng} = response.results[0].geometry.location;
+                console.log(lat, lng);
+            },
+            err => {
+                console.log(err);
+                console.log('there was an error converting the marker addresses');
+            }
+        )
+    }
     
     onMarkerClick = (props, marker, e) => {
         this.setState({
@@ -101,7 +115,8 @@ class GoogleMapsContainer extends Component {
 
     handleRecieveSearchData = (props) => {
         console.log('handleRecieveSearchData called');
-        this.convertAddress();
+        // this.convertAddress();
+        this.convertMarkerAddress();
     };
 
     // Now Render Return the Map //

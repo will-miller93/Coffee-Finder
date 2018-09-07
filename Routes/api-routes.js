@@ -12,13 +12,13 @@ module.exports = function(app) {
             res.json(dbShops);
         });
     });
-    // GET route for getting one specific shop (by id)
-    app.get('api/shops/:id', function(req, res){
-        console.log(req.params.id);
+    // GET route for getting one specific shop (by shopId)
+    app.get('api/shops/', function(req, res){
+        console.log(req.params.shopId);
         db.shops
         .findOne({
             where: {
-                id: req.params.id
+                shopId: req.params.shopId
             }
         })
         .then(function(dbShops){
@@ -26,7 +26,7 @@ module.exports = function(app) {
         });
     });
     // POST route for saving a new shop
-    app.post("/api/shops", function(req, res){
+    app.post("/api/shops/", function(req, res){
         console.log(req.body);
         db.shops
         .create(req.body)
@@ -35,21 +35,9 @@ module.exports = function(app) {
         });
     });
     // DELETE route for deleting a shop (will be deleting by id)
-    app.delete("/api/shops/:id", function(req, res){
-        db.shops
-        .destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(function(dbShops){
-            res.json(dbShops);
-        });
-    });
-    // PUT route for updating shops (will be updating by id)
-    // app.put("/api/shops", function(req, res){
+    // app.delete("/api/shops/:id", function(req, res){
     //     db.shops
-    //     .update(req.body, {
+    //     .destroy({
     //         where: {
     //             id: req.params.id
     //         }
@@ -58,20 +46,49 @@ module.exports = function(app) {
     //         res.json(dbShops);
     //     });
     // });
+    // PUT route for updating shops (will be updating by id)
+    // app.put("/api/shops", function(req, res){
+    //     db.shops
+    //     .update(req.body, {
+    //         where: {
+    //             shopId: req.params.shopId
+    //         }
+    //     })
+    //     .then(function(dbShops){
+    //         res.json(dbShops);
+    //     });
+    // });
     // ALT Put Request
-    app.put('/api/shops/:id', function(req, res){
+    // app.put('/api/shops/', function(req, res){
+    //     db.shops
+    //     .findOne({
+    //         where: {
+    //             shopId: req.params.shopId
+    //         }
+    //     })
+    //     .then(foundShop => {
+    //         foundShop.update(req.body)
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //         console.log('there was an error in updating.');
+    //     })
+    // })
+    app.put('/api/shops/', function(req, res){
+        console.log(req.body);
+        console.log(req.params);
         db.shops
-        .findOne({
+        .update(req.body, {
             where: {
-                id: req.params.id
+                shopId: req.body.shopId
             }
-        }).then(foundShop => {
-            foundShop.update(req.body);
-        }).then(dbShops => {
+        })
+        .then(function(dbShops){
             res.json(dbShops);
-        }).catch(err => {
-            console.log('there was an error finding and updating');
+        })
+        .catch(function(err){
             console.log(err);
+            console.log('there was an error updating database');
         })
     })
 };
