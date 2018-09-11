@@ -5,7 +5,7 @@ const Logout = () => (
 
         <li className="nav-item">
             {/* <a className="nav-link" href="/" onClick={logout}> Logout </a> */}
-            <button type="button" className="btn btn-md" onClick={logout}>Logout</button>
+            <button type="button" className="btn btn-md btn-link text-muted" onClick={logout}>Logout</button>
         </li>
 
 );

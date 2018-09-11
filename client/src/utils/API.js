@@ -9,7 +9,8 @@ export default {
     },
     // get one shop by id
     getOneShop: function(shopId) {
-        return axios.get('http://localhost:3306/api/shops/?shopId=' + shopId);
+        console.log(shopId);
+        return axios.get('http://localhost:3306/api/shops/' + shopId);
     },
     // add new shop to database
     addShop: function(shopData) {

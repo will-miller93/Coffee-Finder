@@ -1,6 +1,6 @@
 // import react here
 import React, {Component} from 'react';
-// import google-map-react
+import '../Map/googleMap.css';
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
 import Geocode from 'react-geocode';
 import API from '../../utils/API';
@@ -65,7 +65,7 @@ class GoogleMapsContainer extends Component {
 
     convertAddress = (props) => {
         console.log(this.props.passedSearchData)
-        Geocode.setApiKey("AIzaSyBmvaBJPmb5C3HIgqz5hEeYFe3y7EO2iRw");
+        Geocode.setApiKey("AIzaSyBAB0MnU4EpRA9f1LI5gitB7drnRpYEQo0");
         Geocode.fromAddress(this.props.passedSearchData).then(
             response => {
                 const {lat, lng} = response.results[0].geometry.location;
@@ -115,8 +115,7 @@ class GoogleMapsContainer extends Component {
 
     handleRecieveSearchData = (props) => {
         console.log('handleRecieveSearchData called');
-        // this.convertAddress();
-        this.convertMarkerAddress();
+        this.convertAddress();
     };
 
     // Now Render Return the Map //
@@ -145,6 +144,7 @@ class GoogleMapsContainer extends Component {
                         position={{lat: shop.lat, lng: shop.lng}}
                         name={shop.name}
                         address={shop.address}
+                        phone={shop.phone}
                         hours={shop.hours}
                         website={shop.website}
                         facebook={shop.facebook}
@@ -164,7 +164,18 @@ class GoogleMapsContainer extends Component {
                 visible={this.state.showingInfoWindow}
                 >
                 <div>
-                    <h5>{this.state.activeMarker.name}</h5>
+                    <ul>
+                        <li><h5>{this.state.activeMarker.name}</h5><hr/></li>
+                        <li><a>{this.state.activeMarker.address}</a></li>
+                        <li><a>{this.state.activeMarker.phone}</a></li>
+                        <li><a>{this.state.activeMarker.hours}</a></li>
+                        <li><a>{this.state.activeMarker.website}</a></li>
+                        <li><a>{this.state.activeMarker.facebook}</a></li>
+                        <li><a>{this.state.activeMarker.instagram}</a></li>
+                        <li><a>{this.state.activeMarker.twitter}</a></li>
+                        <li><a>{this.state.activeMarker.roaster}</a></li>
+                        <li><a>{this.state.activeMarker.description}</a></li>
+                    </ul>
                 </div>
                 </InfoWindow>
             </Map>

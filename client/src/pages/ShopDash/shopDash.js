@@ -35,6 +35,7 @@ class ShopDash extends Component {
             shoplat: '',
             shoplng: '',
             shopId: '', // this will be the decoded id_token set by auth0. used to get one from the database.
+            encodedShopId: '',
             disabled: true,
             saveButtonDisabled: false,
             receivedShop: false, // state to decide if a shop was recieved from the getOne request. used to decide if to add or update
@@ -44,14 +45,19 @@ class ShopDash extends Component {
     // Lifecycle Hook //
     // ================ //
     componentDidMount() {
+        // this.fillInputFields();
         let userId = '';
+        let encodedUri = '';
         if (localStorage.getItem('id_token')) {
             let uid = localStorage.getItem('id_token');
             let userInfo = jwt_decode(uid);
             userId = userInfo.sub;
             console.log(userId);
+            encodedUri = encodeURI(userId);
+            console.log(encodedUri);
             this.setState({
-                shopId: userId
+                shopId: userId,
+                encodedShopId: encodedUri
             })
         } else {
             console.log('creating tokens');
@@ -60,9 +66,12 @@ class ShopDash extends Component {
             let token = localStorage.getItem('id_token');
             let userInfo = jwt_decode(token);
             userId = userInfo.sub
+            encodedUri = encodeURI(userId);
             console.log(userId);
+            console.log(encodedUri);
             this.setState({
-                shopId: userId 
+                shopId: userId,
+                encodedShopId: encodedUri
             })
         }
     }
@@ -71,13 +80,15 @@ class ShopDash extends Component {
     // ============== //
 
     fillInputFields = () => {
-        // console.log(this.state.shopId);
-        console.log('fill input fields has been called');
-        API.getOneShop(this.state.shopId)
+        // console.log(this.state.encodedShopId);
+        // console.log('fill input fields has been called');
+        let encodedShopId = this.state.encodedShopId;
+        console.log(encodedShopId);
+        API.getOneShop(encodedShopId)
             .then(res => {
-                console.log(res.data);
+                console.log(res);
                 this.setState({
-                    id: res.data[0].id,
+                    // id: res.data[0].id,
                     name: res.data[0].name,
                     address: res.data[0].address,
                     phone: res.data[0].phone,
@@ -88,15 +99,15 @@ class ShopDash extends Component {
                     twitter: res.data[0].twitter,
                     roaster: res.data[0].roaster,
                     description: res.data[0].description,
-                    receivedShop: true,
-                    lat: res.data.shoplat,
-                    lng: res.data.shoplng
+                    receivedShop: true
+                    // lat: res.data.shoplat,
+                    // lng: res.data.shoplng
                 });
             })
             .catch(err => {
                 console.log(err);
                 console.log('there was an error in getting one shop from the database.');
-            })
+            });
     }
 
     // handleSaveButtonClick = () => {
@@ -112,9 +123,9 @@ class ShopDash extends Component {
 
     toggleFormInputs = () => {
         // change state of disabled
-        // this.fillInputFields();
-        console.log('clicked');
-        console.log(this.state.disabled);
+        this.fillInputFields(this.state.encodedShopId);
+        // console.log('clicked');
+        // console.log(this.state.disabled);
         if (this.state.disabled === true) {
             this.setState({
                 disabled: false
@@ -134,7 +145,7 @@ class ShopDash extends Component {
             this.setState({
                 saveButtonDisabled: false
             });
-            Geocode.setApiKey('AIzaSyDtX5g-xzjzW6g0bw2ds9KOQlKg_kvCTjE');
+            Geocode.setApiKey('AIzaSyBAB0MnU4EpRA9f1LI5gitB7drnRpYEQo0');
             Geocode.fromAddress(this.state.address).then(response => {
                 const {lat, lng} = response.results[0].geometry.location;
                 this.setState({
@@ -182,7 +193,7 @@ class ShopDash extends Component {
 
     updateShop = () => {
         console.log('updating shop was called');
-        Geocode.setApiKey('AIzaSyDtX5g-xzjzW6g0bw2ds9KOQlKg_kvCTjE');
+        Geocode.setApiKey('AIzaSyBAB0MnU4EpRA9f1LI5gitB7drnRpYEQo0');
         Geocode.fromAddress(this.state.address).then(response => {
             const {lat, lng} = response.results[0].geometry.location;
             this.setState({
@@ -191,8 +202,7 @@ class ShopDash extends Component {
             });
             console.log(lat, lng);
             console.log(this.state.shoplat, this.state.shoplng);
-            API.updateShop(this.state.shopId, {
-                // id: this.state.id,
+            API.updateShop({
                 name: this.state.name,
                 address: this.state.address,
                 phone: this.state.phone,
@@ -205,7 +215,7 @@ class ShopDash extends Component {
                 description: this.state.description,
                 lat: this.state.shoplat,
                 lng: this.state.shoplng,
-                shopId: this.state.shopId
+                shopId: this.state.encodedShopId
             })
             .then(res => {
                 this.setState({

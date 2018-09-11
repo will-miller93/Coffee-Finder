@@ -5,7 +5,7 @@ const Dashboard = () => (
 
         <li className="nav-item">
             {/* <a className="nav-link" href="/dashboard"> Dashboard </a> */}
-            <button type="button" className="btn btn-md" onClick={login}>Dashboard</button>
+            <button type="button" className="btn btn-md btn-link text-muted" onClick={login}>Dashboard</button>
         </li>
 
 );
