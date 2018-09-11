@@ -4,7 +4,7 @@ import {login} from '../../auth/auth';
 const Login = () => (
         <li className="nav-item">
             {/* <a className="nav-link" href="#"> Login </a> */}
-            <button type="button" className="btn btn-md" onClick={login}>Login</button>
+            <button type="button" className="btn btn-md btn-link text-muted" onClick={login}>Login</button>
         </li>
 );
 

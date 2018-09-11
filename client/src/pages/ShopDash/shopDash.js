@@ -4,6 +4,7 @@ import Column from '../../components/Grid/col';
 import Row from '../../components/Grid/row';
 import Container from '../../components/Grid/container';
 import EditBtn from '../../components/DashElements/editBtn';
+import DelBtn from '../../components/DashElements/delBtn';
 import SaveBtn from '../../components/DashElements/saveBtn';
 import TextArea from '../../components/Form/textArea';
 import Input from '../../components/Form/input';
@@ -20,6 +21,7 @@ class ShopDash extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             name: '',
             address: '',
             phone: '',
@@ -32,20 +34,31 @@ class ShopDash extends Component {
             description: '',
             shoplat: '',
             shoplng: '',
+            shopId: '', // this will be the decoded id_token set by auth0. used to get one from the database.
+            encodedShopId: '',
             disabled: true,
-            saveButtonDisabled: false
+            saveButtonDisabled: false,
+            receivedShop: false, // state to decide if a shop was recieved from the getOne request. used to decide if to add or update
         }
     }
 
     // Lifecycle Hook //
     // ================ //
     componentDidMount() {
+        // this.fillInputFields();
         let userId = '';
+        let encodedUri = '';
         if (localStorage.getItem('id_token')) {
             let uid = localStorage.getItem('id_token');
             let userInfo = jwt_decode(uid);
             userId = userInfo.sub;
             console.log(userId);
+            encodedUri = encodeURI(userId);
+            console.log(encodedUri);
+            this.setState({
+                shopId: userId,
+                encodedShopId: encodedUri
+            })
         } else {
             console.log('creating tokens');
             setIdToken();
@@ -53,18 +66,53 @@ class ShopDash extends Component {
             let token = localStorage.getItem('id_token');
             let userInfo = jwt_decode(token);
             userId = userInfo.sub
+            encodedUri = encodeURI(userId);
             console.log(userId);
+            console.log(encodedUri);
+            this.setState({
+                shopId: userId,
+                encodedShopId: encodedUri
+            })
         }
     }
 
     // Helper Methods Needed //
     // ============== //
 
-    fillInputFields() {
-        // and will also fill the input fields.
-        // this wil be executed in the componentDidMount hook
-        // set values = state
+    fillInputFields = () => {
+        // console.log(this.state.encodedShopId);
+        // console.log('fill input fields has been called');
+        let encodedShopId = this.state.encodedShopId;
+        console.log(encodedShopId);
+        API.getOneShop(encodedShopId)
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    // id: res.data[0].id,
+                    name: res.data[0].name,
+                    address: res.data[0].address,
+                    phone: res.data[0].phone,
+                    hours: res.data[0].hours,
+                    website: res.data[0].website,
+                    facebook: res.data[0].facebook,
+                    instagram: res.data[0].instagram,
+                    twitter: res.data[0].twitter,
+                    roaster: res.data[0].roaster,
+                    description: res.data[0].description,
+                    receivedShop: true
+                    // lat: res.data.shoplat,
+                    // lng: res.data.shoplng
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                console.log('there was an error in getting one shop from the database.');
+            });
     }
+
+    // handleSaveButtonClick = () => {
+    //     this.addShop();
+    // };
 
     handleInputChange = (event) => {
         // this will handle changes for all form inputs
@@ -75,8 +123,9 @@ class ShopDash extends Component {
 
     toggleFormInputs = () => {
         // change state of disabled
-        console.log('clicked');
-        console.log(this.state.disabled);
+        this.fillInputFields(this.state.encodedShopId);
+        // console.log('clicked');
+        // console.log(this.state.disabled);
         if (this.state.disabled === true) {
             this.setState({
                 disabled: false
@@ -90,13 +139,13 @@ class ShopDash extends Component {
         };
     };
 
-    addShop = event => {
-        event.preventDefault();
+    addShop = () => {
+        console.log('adding shop was called');
         if (this.state.name && this.state.address && this.state.roaster) {
             this.setState({
                 saveButtonDisabled: false
             });
-            Geocode.setApiKey('AIzaSyAVdqW7SGXiqQSJtkdrriwAbMwkM79Gagw');
+            Geocode.setApiKey('AIzaSyBAB0MnU4EpRA9f1LI5gitB7drnRpYEQo0');
             Geocode.fromAddress(this.state.address).then(response => {
                 const {lat, lng} = response.results[0].geometry.location;
                 this.setState({
@@ -117,7 +166,8 @@ class ShopDash extends Component {
                     roaster: this.state.roaster,
                     description: this.state.description,
                     lat: this.state.shoplat,
-                    lng: this.state.shoplng
+                    lng: this.state.shoplng,
+                    shopId: this.state.shopId
                 })
                 .then(res => {
                     this.setState({
@@ -141,10 +191,50 @@ class ShopDash extends Component {
         }
     };
 
-    updateShop() {
+    updateShop = () => {
+        console.log('updating shop was called');
+        Geocode.setApiKey('AIzaSyBAB0MnU4EpRA9f1LI5gitB7drnRpYEQo0');
+        Geocode.fromAddress(this.state.address).then(response => {
+            const {lat, lng} = response.results[0].geometry.location;
+            this.setState({
+                shoplat: lat,
+                shoplng: lng
+            });
+            console.log(lat, lng);
+            console.log(this.state.shoplat, this.state.shoplng);
+            API.updateShop({
+                name: this.state.name,
+                address: this.state.address,
+                phone: this.state.phone,
+                hours: this.state.hours,
+                website: this.state.website,
+                facebook: this.state.facebook,
+                instagram: this.state.instagram,
+                twitter: this.state.twitter,
+                roaster: this.state.roaster,
+                description: this.state.description,
+                lat: this.state.shoplat,
+                lng: this.state.shoplng,
+                shopId: this.state.encodedShopId
+            })
+            .then(res => {
+                this.setState({
+                    disabled: true,
+                    receivedShop: true
+                });
+            }).catch(err => {
+                console.log(err);
+                console.log('error on shopDash page in update shop function.');
+            });
+        },
+        error => {
+            console.log(error);
+            console.log('conversion failed');
+        });
         // the updateShop axios request
         // will be using the UID from authentication to update.
-    }
+
+    };
 
     render() {
         return(
@@ -157,70 +247,70 @@ class ShopDash extends Component {
                             {/* <ShopForm /> */}
                             <form>
                                 <Input
-                                value={this.state.name}
+                                value={this.state.name || ''}
                                 onChange={this.handleInputChange}
                                 name='name'
                                 placeholder='Shop Name (Required)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.address}
+                                value={this.state.address || ''}
                                 onChange={this.handleInputChange}
                                 name='address'
                                 placeholder='Address (Required)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.phone}
+                                value={this.state.phone || ''}
                                 onChange={this.handleInputChange}
                                 name='phone'
                                 placeholder='Phone Number (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.hours}
+                                value={this.state.hours || ''}
                                 onChange={this.handleInputChange}
                                 name='hours'
                                 placeholder='Shop Hours (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.website}
+                                value={this.state.website || ''}
                                 onChange={this.handleInputChange}
                                 name='website'
                                 placeholder='Website URL (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.facebook}
+                                value={this.state.facebook || ''}
                                 onChange={this.handleInputChange}
                                 name='facebook'
                                 placeholder='Facebook Link (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.instagram}
+                                value={this.state.instagram || ''}
                                 onChange={this.handleInputChange}
                                 name='instagram'
                                 placeholder='Instagram Link (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.twitter}
+                                value={this.state.twitter || ''}
                                 onChange={this.handleInputChange}
                                 name='twitter'
                                 placeholder='Twitter Link (Optional)'
                                 disabled={this.state.disabled}
                                 />
                                 <Input
-                                value={this.state.roaster}
+                                value={this.state.roaster || ''}
                                 onChange={this.handleInputChange}
                                 name='roaster'
                                 placeholder='Roaster Used (Required)'
                                 disabled={this.state.disabled}
                                 />
                                 <TextArea
-                                value={this.state.description}
+                                value={this.state.description || ''}
                                 onChange={this.handleInputChange}
                                 name='description'
                                 placeholder='Description (Optional)'
@@ -234,7 +324,10 @@ class ShopDash extends Component {
                             <EditBtn toggleInputs={this.toggleFormInputs}/>
                         </Column>
                         <Column size="md-1">
-                            <SaveBtn addShop={this.addShop}/>
+                            <SaveBtn handleSaveClick={this.addShop}/>
+                        </Column>
+                        <Column size='md-1'>
+                            <DelBtn handleUpdateClick={this.updateShop}/>
                         </Column>
                     </Row>
                 </Container>

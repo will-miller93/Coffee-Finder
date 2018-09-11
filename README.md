@@ -14,17 +14,21 @@ This is a web application that allows owners, managers and operators of Specialt
 
 ### Back End
 * Express
-* Sequelize
 
 ### Database
 * MySQl
 
 ### Packages and APIs
-* Google Maps API
-* Auth0
+* Google Maps API (google-maps-react)
+* Google Geocoder API (react-geocode)
+* JWT-Decode
+* Cors
+* Auth0 (auth0-js)
 * Body-Parser
 * mysql2
 * Sequelize
+* History.js
+
 
 
 

@@ -1,6 +1,7 @@
 // Require the shops model
 var db = require("../models");
 
+
 // Routes
 // ========
 module.exports = function(app) {
@@ -12,12 +13,13 @@ module.exports = function(app) {
             res.json(dbShops);
         });
     });
-    // GET route for getting one specific shop (by id)
-    app.get('api/shops/:id', function(req, res){
+    // GET route for getting one specific shop (by shopId)
+    app.get('/api/shops/:shopId', function(req, res){
+        console.log(req.params);
         db.shops
-        .findOne({
+        .findAll({
             where: {
-                id: req.params.id
+                shopId: req.params.shopId
             }
         })
         .then(function(dbShops){
@@ -25,7 +27,7 @@ module.exports = function(app) {
         });
     });
     // POST route for saving a new shop
-    app.post("/api/shops", function(req, res){
+    app.post("/api/shops/", function(req, res){
         console.log(req.body);
         db.shops
         .create(req.body)
@@ -34,27 +36,32 @@ module.exports = function(app) {
         });
     });
     // DELETE route for deleting a shop (will be deleting by id)
-    app.delete("/api/shops/:id", function(req, res){
-        db.shops
-        .destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(function(dbShops){
-            res.json(dbShops);
-        });
-    });
-    // PUT route for updating shops (will be updating by id)
-    app.put("/api/shops", function(req, res){
+    // app.delete("/api/shops/:id", function(req, res){
+    //     db.shops
+    //     .destroy({
+    //         where: {
+    //             id: req.params.id
+    //         }
+    //     })
+    //     .then(function(dbShops){
+    //         res.json(dbShops);
+    //     });
+    // });
+    app.put('/api/shops/', function(req, res){
+        console.log(req.body);
+        // console.log(req.params.body);
         db.shops
         .update(req.body, {
             where: {
-                id: req.params.id
+                shopId: req.body.shopId
             }
         })
         .then(function(dbShops){
             res.json(dbShops);
-        });
+        })
+        .catch(function(err){
+            console.log(err);
+            console.log('there was an error updating database');
+        })
     });
 };

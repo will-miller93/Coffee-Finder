@@ -1,6 +1,6 @@
 // import react here
 import React, {Component} from 'react';
-// import google-map-react
+import '../Map/googleMap.css';
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
 import Geocode from 'react-geocode';
 import API from '../../utils/API';
@@ -13,15 +13,23 @@ class GoogleMapsContainer extends Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            searchData: this.props.passedSearchData,
-            shops: []
+            searchData: '',
+            shops: [],
+            mapLat: '33.7490',
+            mapLng: '-84.3880',
         }
 
     }
 
-    // LifeCycle Functions Needed //
-    // ========================== //
-    
+    componentDidUpdate(prevProps) {
+        if (this.props.passedSearchData !== prevProps.passedSearchData) {
+            this.setState({
+                searchData: this.props.searchData
+            });
+            this.handleRecieveSearchData();
+        }
+    }
+
     componentDidMount() {
         // get all axios request
         API.getShops({})
@@ -32,17 +40,23 @@ class GoogleMapsContainer extends Component {
             console.log(this.state.shops);
         })
         .catch(err => console.log(err));
+
     }
 
     // Helper Methods Needed //
     // ===================== //
 
-    convertAddress = (data) => {
-        Geocode.setApiKey("AIzaSyA8X8orU5SFKA1G--GaEZDaIDZskhJsuds");
-        Geocode.fromAddress(data).then(
+    convertAddress = (props) => {
+        console.log(this.props.passedSearchData)
+        Geocode.setApiKey("AIzaSyBAB0MnU4EpRA9f1LI5gitB7drnRpYEQo0");
+        Geocode.fromAddress(this.props.passedSearchData).then(
             response => {
                 const {lat, lng} = response.results[0].geometry.location;
                 console.log(lat, lng);
+                this.setState({
+                    mapLat: lat,
+                    mapLng: lng
+                });
             },
             error => {
                 console.log(error);
@@ -50,6 +64,20 @@ class GoogleMapsContainer extends Component {
             }
         )
     };
+
+    convertMarkerAddress = (data) => {
+        Geocode.setApiKey('AIzaSyCpjcewBZ-XhLjZayxSQKUeXXzSU31Mzbk');
+        Geocode.fromAddress(data).then(
+            response => {
+                const {lat, lng} = response.results[0].geometry.location;
+                console.log(lat, lng);
+            },
+            err => {
+                console.log(err);
+                console.log('there was an error converting the marker addresses');
+            }
+        )
+    }
     
     onMarkerClick = (props, marker, e) => {
         this.setState({
@@ -68,6 +96,11 @@ class GoogleMapsContainer extends Component {
         }
     };
 
+    handleRecieveSearchData = (props) => {
+        console.log('handleRecieveSearchData called');
+        this.convertAddress();
+    };
+
     // Now Render Return the Map //
     // ========================= //
     render(){
@@ -83,6 +116,7 @@ class GoogleMapsContainer extends Component {
                 style={mapStyle}
                 onClick={this.onMapClick}
                 initialCenter={{ lat: 33.7490, lng: -84.3880 }}
+                center={{lat: this.state.mapLat, lng: this.state.mapLng}}
                 zoom={8}
             >
                 {this.state.shops.length ? (
@@ -93,6 +127,7 @@ class GoogleMapsContainer extends Component {
                         position={{lat: shop.lat, lng: shop.lng}}
                         name={shop.name}
                         address={shop.address}
+                        phone={shop.phone}
                         hours={shop.hours}
                         website={shop.website}
                         facebook={shop.facebook}
@@ -112,7 +147,18 @@ class GoogleMapsContainer extends Component {
                 visible={this.state.showingInfoWindow}
                 >
                 <div>
-                    <h5>{this.state.activeMarker.name}</h5>
+                    <ul>
+                        <li><h5>{this.state.activeMarker.name}</h5><hr/></li>
+                        <li><a>{this.state.activeMarker.address}</a></li>
+                        <li><a>{this.state.activeMarker.phone}</a></li>
+                        <li><a>{this.state.activeMarker.hours}</a></li>
+                        <li><a>{this.state.activeMarker.website}</a></li>
+                        <li><a>{this.state.activeMarker.facebook}</a></li>
+                        <li><a>{this.state.activeMarker.instagram}</a></li>
+                        <li><a>{this.state.activeMarker.twitter}</a></li>
+                        <li><a>{this.state.activeMarker.roaster}</a></li>
+                        <li><a>{this.state.activeMarker.description}</a></li>
+                    </ul>
                 </div>
                 </InfoWindow>
             </Map>

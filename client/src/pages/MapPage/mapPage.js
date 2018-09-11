@@ -14,14 +14,6 @@ class MapPage extends Component {
         }
     }
 
-    // Lifecycle Hooks Needed //
-    // ======================== //
-    componentDidMount() {
-        // execute the getAllShops method
-        // use the newly setState to render markers
-
-    }
-
     // Helper Methods Needed //
     // ===================== //
 
@@ -33,10 +25,6 @@ class MapPage extends Component {
         });
         console.log('search data should has been recieved.');
     };
-
-    // function to pass the search data to the GoogleMapWrapper
-
-
 
     render(){
         return(

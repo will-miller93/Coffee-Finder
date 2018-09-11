@@ -1,6 +1,4 @@
 import decode from 'jwt-decode';
-// import { BrowserRouter } from 'react-router-dom';
-// import history from '../../history';
 import auth0 from 'auth0-js';
 
 const ID_TOKEN_KEY = 'id_token';
@@ -10,7 +8,6 @@ const CLIENT_ID = 'eMpLssdovFz0Q0JgYvHSfUka7m7eq390';
 const CLIENT_DOMAIN = 'coffeefinder.auth0.com';
 const AUDIENCE = 'https://coffeefinder.auth0.com/userinfo'
 const REDIRECT = 'http://localhost:3000/dashboard';
-// const SCOPE = 'openid';
 
 var auth = new auth0.WebAuth({
     clientID: CLIENT_ID,
@@ -86,12 +83,14 @@ export function setIdToken() {
 };
 
 // function to check if user is logged in
+// I DONT THINK THIS IS NECESSARY
 export function isLoggedIn() {
     const idToken = getIdToken();
     return !!idToken && !isTokenExpired(idToken);
 }
 
 // function to get a new expiration date for the users tokens
+// DO I NEED THE TOKEN EXIPIRATION DATA FUNCTION?
 function getTokenExpirationDate(encodedToken) {
     // first decode the token
     const token = decode(encodedToken);
