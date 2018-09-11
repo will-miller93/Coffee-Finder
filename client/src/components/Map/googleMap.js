@@ -21,23 +21,6 @@ class GoogleMapsContainer extends Component {
 
     }
 
-    // LifeCycle Functions Needed //
-    // ========================== //
-    
-    // componentWillReceiveProps(nextProps) {
-    //     console.log(nextProps);
-    //     // console.log(nextProps.passedSearchData);
-    //     // console.log(this.props.passedSearchData);
-    //     // console.log(this.state.searchData);
-    //     if (nextProps.passedSearchData !== this.props.passedSearchData) {
-    //         this.setState({
-    //             searchData: nextProps.passedSearchData
-    //         });
-    //         this.handleRecieveSearchData();
-    //         // console.log(this.state.searchData);
-    //     }
-    // }
-
     componentDidUpdate(prevProps) {
         if (this.props.passedSearchData !== prevProps.passedSearchData) {
             this.setState({

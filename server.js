@@ -17,15 +17,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 // parse the application/json
 app.use(bodyParser.json());
 
-// static directory
-// this may be different with react.
-// app.use(express.static("public"));
-
 // Routes //
 routes(app);
-// app.use('/', routes);
-// app.use('/api/shops/', routes);
-// app.use('/api/shops/:id', routes);
+
 
 // Syncing the sequelize models and then starting the express app //
 // ============================================================== //

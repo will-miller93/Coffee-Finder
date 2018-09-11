@@ -1,6 +1,4 @@
 import decode from 'jwt-decode';
-// import { BrowserRouter } from 'react-router-dom';
-// import history from '../../history';
 import auth0 from 'auth0-js';
 
 const ID_TOKEN_KEY = 'id_token';
@@ -10,7 +8,6 @@ const CLIENT_ID = 'eMpLssdovFz0Q0JgYvHSfUka7m7eq390';
 const CLIENT_DOMAIN = 'coffeefinder.auth0.com';
 const AUDIENCE = 'https://coffeefinder.auth0.com/userinfo'
 const REDIRECT = 'http://localhost:3000/dashboard';
-// const SCOPE = 'openid';
 
 var auth = new auth0.WebAuth({
     clientID: CLIENT_ID,

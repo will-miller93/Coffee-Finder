@@ -4,6 +4,7 @@ import Title from '../NavElements/Title/title';
 import LogOut from '../NavElements/LogOut/logOutDirect';
 import ToMap from '../NavElements/GoToMap/mapDirect';
 import {logout} from '../auth/auth';
+import './mapNav.css';
 
 // this is very simple. Just the parent <nav> element for the navelements
 // components to sit it
