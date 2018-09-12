@@ -5,20 +5,20 @@ import axios from 'axios';
 export default {
     // get all shops
     getShops: function() {
-        return axios.get('http://localhost:3306/api/shops');
+        return axios.get('https://pure-taiga-14555.herokuapp.com/api/shops');
     },
     // get one shop by id
     getOneShop: function(shopId) {
         console.log(shopId);
-        return axios.get('http://localhost:3306/api/shops/' + shopId);
+        return axios.get('https://pure-taiga-14555.herokuapp.com/api/shops/' + shopId);
     },
     // add new shop to database
     addShop: function(shopData) {
-        return axios.post('http://localhost:3306/api/shops', shopData);
+        return axios.post('https://pure-taiga-14555.herokuapp.com/api/shops', shopData);
     },
     // update shop by id
     updateShop: function(body) {
-        return axios.put('http://localhost:3306/api/shops/', body);
+        return axios.put('https://pure-taiga-14555.herokuapp.com/api/shops/', body);
     },
     // delete shop by id
     // deleteShop: function(id) {
