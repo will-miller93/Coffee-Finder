@@ -9,10 +9,13 @@ const CLIENT_DOMAIN = 'coffeefinder.auth0.com';
 const AUDIENCE = 'https://coffeefinder.auth0.com/userinfo'
 // const REDIRECT = 'http://localhost:3000/dashboard';
 let REDIRECT;
+let returnTo;
 if (process.env.NODE_ENV == 'production') {
     REDIRECT = 'https://pure-taiga-14555.herokuapp.com/dashboard';
+    returnTo = 'https://pure-taiga-14555.herokuapp.com/';
 } else {
     REDIRECT = 'http://localhost:3000/dashboard';
+    returnTo = 'http://localhost:3000/';
 }
 
 var auth = new auth0.WebAuth({
@@ -35,7 +38,7 @@ export function logout() {
     clearIdToken();
     clearAccessToken();
     auth.logout({
-        returnTo: 'http://localhost:3000/',
+        returnTo: returnTo,
         clientID: CLIENT_ID
     });
 }
