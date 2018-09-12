@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3306",
+  "proxy": "https://pure-taiga-14555.herokuapp.com/",
   "dependencies": {
     "auth0-js": "^9.7.3",
     "axios": "^0.18.0",
