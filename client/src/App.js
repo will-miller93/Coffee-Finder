@@ -9,8 +9,8 @@ const App = () => {
     <Router history={history}>
       <div>
         <Switch>
-          <Route exact path='/' component={MapPage} />
-          <Route exact path='/dashboard' component={ShopDash} />
+          <Route exact path='https://pure-taiga-14555.herokuapp.com/' component={MapPage} />
+          <Route exact path='https://pure-taiga-14555.herokuapp.com/dashboard' component={ShopDash} />
         </Switch>
       </div>
     </Router>
