@@ -7,7 +7,13 @@ const ACCESS_TOKEN_KEY = 'access_token';
 const CLIENT_ID = 'eMpLssdovFz0Q0JgYvHSfUka7m7eq390';
 const CLIENT_DOMAIN = 'coffeefinder.auth0.com';
 const AUDIENCE = 'https://coffeefinder.auth0.com/userinfo'
-const REDIRECT = 'http://localhost:3000/dashboard';
+// const REDIRECT = 'http://localhost:3000/dashboard';
+let REDIRECT;
+if (process.env.NODE_ENV == 'production') {
+    REDIRECT = 'https://pure-taiga-14555.herokuapp.com/dashboard';
+} else {
+    REDIRECT = 'http://localhost:3000/dashboard';
+}
 
 var auth = new auth0.WebAuth({
     clientID: CLIENT_ID,
