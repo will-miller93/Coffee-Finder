@@ -2,6 +2,11 @@
   "name": "soltech-codechallenge",
   "version": "1.0.0",
   "description": "web application to find coffee shops",
+  "engines": {
+    "node": "9.6.1",
+    "npm": "5.6.0",
+    "yarn": "1.6.0"
+  },
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +14,7 @@
     "start:prod": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
-    "install": "cd client; npm install;",
+    "install": "cd client; yarn install;",
     "build": "cd client && yarn build",
     "heroku-postbuild": "yarn build"
   },
