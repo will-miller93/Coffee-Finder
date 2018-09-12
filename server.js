@@ -16,7 +16,7 @@ var db = require("./models");
 app.use(bodyParser.urlencoded({extended: true}));
 // parse the application/json
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static("client/build"));
 
 // Routes //
 routes(app);
