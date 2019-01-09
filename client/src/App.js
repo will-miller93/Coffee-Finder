@@ -4,6 +4,8 @@ import history from './history';
 import MapPage from './pages/MapPage/mapPage';
 import ShopDash from './pages/ShopDash/shopDash';
 
+
+// Hello! 
 const App = () => {
   return(
     <Router history={history}>
